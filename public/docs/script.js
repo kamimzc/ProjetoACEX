@@ -146,7 +146,7 @@
     function sair() {
         if(confirm('Tem certeza que deseja sair do sistema?')) {
             firebase.auth().signOut().then(() => {
-                window.location.href = 'index.html';
+                window.location.href = '/index.html';
             });
         }
     }
@@ -159,7 +159,7 @@
     // Verificação de autenticação
     firebase.auth().onAuthStateChanged((user) => {
         if (!user) {
-            window.location.href = 'index.html';
+            window.location.href = '/index.html';
         } else {
             // Verifica permissões ao carregar a página
             db.collection('vendas').limit(1).get()
