@@ -6,6 +6,7 @@ font-family: Arial, sans-serif;
 background-color: #fee8f0;/*cor de fundo da navbar*/
 }
 
+
 .container-alt {
 max-width: 600px;
 margin: auto;
@@ -66,7 +67,7 @@ border-radius: 10px;
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-select, input, button {
+select, input {
 margin: 5px 0;
 padding: 10px;
 width: calc(100% - 20px);
@@ -86,16 +87,36 @@ gap: 8px;
 }
 
 .btn-adicionar{
+margin: 5px 0;
+padding: 10px;
+width: calc(100% - 20px);
 border-radius: 10px;
+border: 1px solid #ddd;  
 }
 
 .btn-categoria {
-border-radius: 10px;
 background-color: #F2C2CF;
+margin: 5px 0;
+padding: 10px;
+width: calc(100% - 20px);
+border-radius: 10px;
+border: 1px solid #ddd; 
 }
 
 .btn-enviarpromo {
+margin: 5px 0;
+padding: 10px;
+width: calc(100% - 20px);
 border-radius: 10px;
+border: 1px solid #ddd; 
+}
+
+.btn-buscar, .btn-nova-anotacao, .btn-nova-tarefa {
+  margin: 5px 0;
+  padding: 10px;
+  width: calc(100% - 20px);
+  border-radius: 10px;
+  border: 1px solid #ddd; 
 }
 
 button:hover {

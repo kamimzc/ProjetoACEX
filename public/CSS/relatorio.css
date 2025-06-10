@@ -1,132 +1,154 @@
-        body { 
-            font-family: Arial, sans-serif; 
-            background-color: white; 
-        }
-        
-        .navbar-custom {
-            background-color: #fee8f0;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .filters {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .filters input, .filters button {
-            padding: 8px 12px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
-        
-        .btn-export {
-            background-color: #F5AAC8;
-            color: #333;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-weight: bold;
-        }
-        
-        .btn-export:hover {
-            background-color: #F2C2CF;
-        }
-        
-        .btn-pdf {
-            background-color: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 14px;
-            margin: 2px;
-        }
-        
-        .btn-pdf:hover {
-            background-color: #ff5252;
-        }
-        
-        .btn-email {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 14px;
-            margin: 2px;
-        }
-        
-        .btn-email:hover {
-            background-color: #45a049;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        th {
-            background-color: #fee8f0;
-            font-weight: bold;
-        }
-        
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-        
-        .status-message {
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 4px;
-            text-align: center;
-        }
-        
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-        
-        .connecting {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
+body { 
+    font-family: Arial, sans-serif; 
+    background-color: white; 
+}
+
+.navbar-custom {
+    background-color: #fee8f0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filters input, .filters button {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* Estilo específico para o botão de sair */
+.btn-sair {
+background: #F2C2CF;
+color: #333;
+padding: 5px 10px;  /* Reduzi o padding */
+font-size: 12px;   /* Aumentei um pouco o tamanho da fonte para ficar legível */
+margin-left: 10px;  /* Ajuste a margem conforme necessário */
+height: auto;      /* Garante que a altura seja automática */
+width: auto;       /* Garante que a largura seja automática */
+line-height: 1;    /* Melhora o alinhamento vertical do texto/ícone */
+}
+
+.btn-sair:hover {
+background: #F2C2CF;
+}
+
+.btn-sair i {
+font-size: 12px;   /* Ajustei para combinar com o texto */
+margin-right: 3px; /* Espaço entre ícone e texto */
+}
+
+
+.btn-export {
+    background-color: #F5AAC8;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.btn-export:hover {
+    background-color: #F2C2CF;
+}
+
+.btn-pdf {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+    margin: 2px;
+}
+
+.btn-pdf:hover {
+    background-color: #ff5252;
+}
+
+.btn-email {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+    margin: 2px;
+}
+
+.btn-email:hover {
+    background-color: #45a049;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #fee8f0;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+.status-message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.connecting {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
