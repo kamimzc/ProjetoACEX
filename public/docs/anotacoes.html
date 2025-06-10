@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anotações - Bazar São Jerônimo</title>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!--<link rel="stylesheet" href="/public/CSS/anotacoes.css">-->
   <link rel="stylesheet" href="/public/CSS/styles.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -40,7 +42,7 @@
   </nav>
   <br> <br> 
 <div class="container-alt">
-  <center><h1>Anotações do Bazar 📝</h1></center>
+  <h1>Anotações do Bazar 📝</h1>
   <div class="search-bar">
     <input type="text" id="search" placeholder="Buscar por palavra-chave...">
     <button onclick="searchNotes()">🔍 Buscar</button>
@@ -52,14 +54,14 @@
 
   <div id="notes" class="note-container"></div>
   <div id="tasks" class="task-container"></div>
-
+  <div id="calendar"></div>
   <!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script> <!--não tirar esse script daqui-->
 <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script><!--não tirar esse script daqui-->
 
 <!-- Bootstrap Bundle (com JS e Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 <script>/*não tirar esse script daqui*/
   const firebaseConfig = {
     apiKey: "AIzaSyBg_LBg0LoH7ADKPHN571ARxEjhgUN2TmE",

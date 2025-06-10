@@ -273,12 +273,62 @@ function searchNotes() {
   });
 }
 
+ document.addEventListener('DOMContentLoaded', function () {
+      const calendarEl = document.getElementById('calendar');
+
+      // Carrega eventos do localStorage ou inicia vazio
+      const savedEvents = JSON.parse(localStorage.getItem('meusEventos')) || [];
+
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'pt-br',
+        editable: true,
+        selectable: true,
+        events: savedEvents,
+
+        // Adiciona evento ao clicar numa data
+        dateClick: function (info) {
+          const title = prompt('Digite o título do evento:');
+          if (title) {
+            const newEvent = {
+              title: title,
+              start: info.dateStr,
+              allDay: true,
+            };
+            calendar.addEvent(newEvent);
+
+            // Salva no localStorage
+            savedEvents.push(newEvent);
+            localStorage.setItem('meusEventos', JSON.stringify(savedEvents));
+          }
+        },
+
+        // Remove evento ao clicar nele
+        eventClick: function (info) {
+          if (confirm(`Deseja remover o evento "${info.event.title}"?`)) {
+            // Remove visualmente
+            info.event.remove();
+
+            // Remove do localStorage
+            const updatedEvents = savedEvents.filter(e =>
+              !(e.title === info.event.title && e.start === info.event.startStr)
+            );
+            localStorage.setItem('meusEventos', JSON.stringify(updatedEvents));
+          }
+        }
+      });
+
+      calendar.render();
+    });
+
 function sair() {
-    if(confirm('Tem certeza que deseja sair do sistema?')) {
-        firebase.auth().signOut().then(() => {
-            window.location.href = 'index.html';
-        });
-    }
+  if (confirm('Tem certeza que deseja sair do sistema?')) {
+    firebase.auth().signOut().then(() => {
+      window.location.href = 'index.html';
+    }).catch(error => {
+      console.error("Erro ao sair:", error);
+    });
+  }
 }
 
 // Carrega dados automaticamente ao abrir a página

@@ -3,7 +3,7 @@ font-family: Arial, sans-serif;
 }
 
 .navbar-custom {
-background-color: #fee8f0;/*cor de fundo da navbar*/
+background-color: #fee8fe;/*cor de fundo da navbar*/
 }
 
 .container-alt {
@@ -23,8 +23,6 @@ h2 {
 background: rgba(255, 182, 193, 0.5);
 padding: 10px;
 border-radius: 10px;
-text-align: center; 
-color: #333; 
 }
 
 .categories {
@@ -85,9 +83,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 gap: 8px;
-padding: 12px; 
-border-radius: 4px; 
-}           
+}
 
 .btn-adicionar{
 border-radius: 10px;
@@ -103,7 +99,7 @@ border-radius: 10px;
 }
 
 button:hover {
-background: #f1cdd7;
+background: #F2C2CF;
 }
 
 /* Estilo específico para o botão de sair */
@@ -169,16 +165,42 @@ word-break: break-word;
 }
 /*config da pagina index*/
 .login-container { 
-    max-width: 400px; 
-    margin: 50px auto; 
-    padding: 30px; 
-    background: white; 
-    border-radius: 8px; 
-    box-shadow: 0 0 15px #F2C2CF;
+            max-width: 400px; 
+            margin: 50px auto; 
+            padding: 30px; 
+            background: white; 
+            border-radius: 8px; 
+            box-shadow: 0 0 15px #F2C2CF;
+        }
+        h2 { text-align: center; color: #333; }
+        button { 
+            
+            color: #333; 
+            padding: 12px; 
+            border: none; 
+            border-radius: 4px; 
+            font-size: 16px; 
+            cursor: pointer;         
+        }
+#calendar { max-width: 900px; 
+    margin: 40px auto;               
+    background-color:white;
+    border-color: #bf360c;
+    stop-color: #9c27b0; 
 }
+  .fc-daygrid-day-number {
+    color: #e91e63; /* rosa */
+    font-weight: bold;
+  }
 
-.form-group {
- margin-left: 25px;
- align-items: center;
- justify-content: center;
-}
+  /* Opcional: mudar o dia atual */
+  .fc-day-today .fc-daygrid-day-number {
+    background-color: #e91e63;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+  }
+  .fc-col-header-cell-cushion {
+    color: #e91e63; /* azul */
+    font-weight: bold;
+  }
