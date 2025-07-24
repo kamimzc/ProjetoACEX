@@ -1,70 +1,12 @@
-        body { 
-            font-family: Arial, sans-serif; 
-            background-color: white; 
-        }
-        
-        nav {
-            background-color: #fee8f0;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        
-        
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .filters {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .filters input, .filters button {
-            padding: 8px 12px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
-        
-        .btn-export {
-            background-color: #F5AAC8;
-            color: #333;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-weight: bold;
-        }
-        
-        .btn-export:hover {
-            background-color: #F2C2CF;
-        }
-        
-        .btn-pdf {
-            background-color: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 14px;
-            margin: 2px;
-        }
+body {
+font-family: Arial, sans-serif;
+}
 
-        
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-        } 
+
+.btn-nova-anotacao, .btn-nova-tarefa {
+  margin: 5px 0;
+  padding: 10px;
+  width: calc(100% - 20px);
+  border-radius: 10px;
+  border: 1px solid #ddd; 
+}
