@@ -137,7 +137,7 @@ function renderTasks() {
 
 function renderChecklist(tasksList, taskId) {
   return tasksList.map((task, index) => `
-    <div class="checklist-item">
+    <div class="checkbox-container">
       <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${taskId}, ${index})">
       <span>${task.text}</span>
     </div>

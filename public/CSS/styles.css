@@ -82,42 +82,6 @@ justify-content: center;
 gap: 8px;
 }
 
-.btn-adicionar{
-margin: 5px 0;
-padding: 10px;
-width: calc(100% - 20px);
-border-radius: 10px;
-border: 1px solid #ddd;  
-}
-
-.btn-categoria {
-background-color: #F2C2CF;
-margin: 5px 0;
-padding: 10px;
-width: calc(100% - 20px);
-border-radius: 10px;
-border: 1px solid #ddd; 
-}
-
-.btn-enviarpromo {
-margin: 5px 0;
-padding: 10px;
-width: calc(100% - 20px);
-border-radius: 10px;
-border: 1px solid #ddd; 
-}
-
-.btn-buscar, .btn-nova-anotacao, .btn-nova-tarefa {
-  margin: 5px 0;
-  padding: 10px;
-  width: calc(100% - 20px);
-  border-radius: 10px;
-  border: 1px solid #ddd; 
-}
-
-button:hover {
-background: #F2C2CF;
-}
 
 /* Estilo específico para o botão de sair */
 .btn-sair {
