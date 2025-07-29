@@ -7,7 +7,6 @@
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!--<link rel="stylesheet" href="/public/CSS/anotacoes.css">-->
   <link rel="stylesheet" href="/public/CSS/styles.css">
   <link rel="shortcut icon" href="/public/docs/imagens/logo.png" type="image/x-icon">
 </head>
@@ -41,7 +40,10 @@
           </button>
       </div>       
   </nav>
-  <br> <br> 
+
+  <!--Página de Anotações-->
+<div class="my-4"></div><!--Utilizado como br-->
+
 <div class="container-alt">
   <h1>Anotações do Bazar 📝</h1>
   <div class="search-bar">
@@ -56,14 +58,18 @@
   <div id="notes" class="note-container"></div>
   <div id="tasks" class="task-container"></div>
   <div id="calendar"></div>
+
   <!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script> <!--não tirar esse script daqui-->
-<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script><!--não tirar esse script daqui-->
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script> 
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
 
 <!-- Bootstrap Bundle (com JS e Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!--Full Calendar-->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
 <script>/*não tirar esse script daqui*/
   const firebaseConfig = {
     apiKey: "AIzaSyBg_LBg0LoH7ADKPHN571ARxEjhgUN2TmE",

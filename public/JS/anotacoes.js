@@ -1,7 +1,7 @@
-let notes = [];
+let notes = [];//Variáveis globais, guarda notas e tarefas em arrays
 let tasks = [];
 
-// Salva notas e tarefas no Firestore
+// Salva os arrays notes e tasks no documento "dados" dentro da coleção anotacoes do Firebase
 function saveData() {
   db.collection("anotacoes").doc("dados").set({ notes, tasks });
 }
@@ -12,14 +12,15 @@ function loadData() {
     if (doc.exists) {
       notes = doc.data().notes || [];
       tasks = doc.data().tasks || [];
-      renderNotes();
-      renderTasks();
+      renderNotes();//utilizado pra mostrar todas anotações na tela
+      renderTasks();//utilizado pra mostrar todas tarefas na tela
     }
   });
 }
 
+//Função de notas
 function addNote() {
-  const id = Date.now();
+  const id = Date.now();//Gera ID numérico
   const note = {
     id,
     title: "Nova Anotação",

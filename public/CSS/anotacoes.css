@@ -10,3 +10,11 @@ font-family: Arial, sans-serif;
   border-radius: 10px;
   border: 1px solid #ddd; 
 }
+.btn-buscar:hover,
+.btn-nova-anotacao:hover,
+.btn-nova-tarefa:hover {
+  background-color: #f1ae; /* Um rosa mais forte */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
