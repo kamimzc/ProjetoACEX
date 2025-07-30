@@ -107,12 +107,30 @@ margin-right: 3px; /* Espaço entre ícone e texto */
 }
 
 .fc-daygrid-day-number {
-  color: #F2C; /* rosa por exemplo */
+  color: rgb(223, 87, 191); /* rosa por exemplo */
   font-weight: bold;
 }
 .fc-col-header-cell-cushion {
-  color: #F2C; /* mesma cor dos dias */
+  color: rgb(223, 87, 191); /* mesma cor dos dias */
   font-weight: bold;
   text-transform: lowercase; /* se quiser deixar tudo minúsculo */
   text-decoration: none;     /* remove sublinhado se houver */
+}
+.note.important {
+  border-left: 4px solid gold;
+  background-color: #fff9c4;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #323232;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  opacity: 0.95;
+  font-size: 14px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  z-index: 9999;
 }

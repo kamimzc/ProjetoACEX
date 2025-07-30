@@ -18,6 +18,8 @@ function loadData() {
   });
 }
 
+
+
 //Função de notas
 function addNote() {
   const id = Date.now();//Gera ID numérico
@@ -72,29 +74,93 @@ function renderNotes() {
   const container = document.getElementById("notes");
   container.innerHTML = "";
 
-  notes.forEach(note => {
-    const noteEl = document.createElement("div");
-    noteEl.className = "note collapsed";
-    noteEl.setAttribute("data-id", note.id);
+  // Notas importantes vêm primeiro
+  notes.sort((a, b) => b.important - a.important);
 
-    noteEl.innerHTML = `
-      <div class="note-summary" onclick="toggleNote(${note.id})">
-        <h3>${note.title}</h3>
-        <p>${note.content.substring(0, 50)}${note.content.length > 50 ? '...' : ''}</p>
-      </div>
-      <div class="note-details" style="display: none;">
-        <h3 contenteditable="true" onblur="updateTitle(${note.id}, this.textContent)">${note.title}</h3>
-        <textarea onblur="updateContent(${note.id}, this.value)">${note.content}</textarea>
-        <div class="actions">
-          <button onclick="toggleImportant(${note.id})">${note.important ? '⭐' : '☆'}</button>
-          <button onclick="deleteNote(${note.id})">🗑️</button>
-        </div>
-        <small>${new Date(note.date).toLocaleString()}</small>
-      </div>
-    `;
+  notes.forEach(note => {
+    const noteEl = createNoteElement(note);
     container.appendChild(noteEl);
   });
 }
+
+function createNoteElement(note) {
+  const noteEl = document.createElement("div");
+  noteEl.className = "note collapsed";
+  noteEl.setAttribute("data-id", note.id);
+  if (note.important) noteEl.classList.add("important");
+
+  const summary = document.createElement("div");
+  summary.className = "note-summary";
+  summary.tabIndex = 0;
+  summary.setAttribute("aria-expanded", "false");
+  summary.addEventListener("click", () => toggleNote(note.id));
+
+  const title = document.createElement("h3");
+  title.textContent = note.title;
+
+  const preview = document.createElement("p");
+  preview.textContent = note.content.length > 50
+    ? note.content.substring(0, 50) + "..."
+    : note.content;
+
+  summary.appendChild(title);
+  summary.appendChild(preview);
+
+  const details = document.createElement("div");
+  details.className = "note-details";
+  details.style.display = "none";
+
+  const editableTitle = document.createElement("h3");
+  editableTitle.contentEditable = true;
+  editableTitle.textContent = note.title;
+  editableTitle.onblur = () => updateTitle(note.id, editableTitle.textContent);
+
+  const textarea = document.createElement("textarea");
+  textarea.value = note.content;
+  textarea.onblur = () => updateContent(note.id, textarea.value);
+
+  const actions = document.createElement("div");
+  actions.className = "actions";
+
+  const starBtn = document.createElement("button");
+  starBtn.textContent = note.important ? "⭐" : "☆";
+  starBtn.onclick = () => {
+    toggleImportant(note.id);
+    showToast(note.important ? "Desmarcada como importante." : "Marcada como importante.");
+  };
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "🗑️";
+  deleteBtn.onclick = () => {
+    deleteNote(note.id);
+    showToast("Anotação excluída.");
+  };
+
+  const date = document.createElement("small");
+  date.textContent = new Date(note.date).toLocaleString();
+
+  actions.appendChild(starBtn);
+  actions.appendChild(deleteBtn);
+
+  details.appendChild(editableTitle);
+  details.appendChild(textarea);
+  details.appendChild(actions);
+  details.appendChild(date);
+
+  noteEl.appendChild(summary);
+  noteEl.appendChild(details);
+
+  return noteEl;
+}
+
+function showToast(message) {
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
 
 function toggleNote(id) {
   const noteEl = document.querySelector(`.note[data-id="${id}"]`);
