@@ -1,0 +1,74 @@
+body {
+font-family: Arial, sans-serif;
+font-size: 20px;
+}
+
+.navbar-custom {
+background-color: #fee8f0;/*cor de fundo da navbar*/
+}
+
+.container-alt {
+max-width: 600px;
+margin: auto;
+background: rgba(255, 255, 255, 0.7);
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 0 15px #F5AAC8;
+}
+
+form {
+background: white;
+color: #333;
+padding: 15px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input {
+margin: 5px 0;
+padding: 10px;
+width: calc(100% - 20px);
+border-radius: 10px;
+border: 1px solid #ddd;  
+}
+
+button {
+background: #F2C2CF;
+color: #333;
+font-size: 16px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+padding: 12px;
+border-radius: 10px;
+border: 1px solid #ddd;
+font-size: 18px;
+}
+
+button:hover {
+background: #e694aa;
+}
+
+/* Estilo específico para o botão de sair */
+.btn-sair {
+background: #F2C2CF;
+color: #333;
+padding: 5px 10px;  /* Reduzi o padding */
+font-size: 15px;   /* Aumentei um pouco o tamanho da fonte para ficar legível */
+margin-left: 10px;  /* Ajuste a margem conforme necessário */
+height: auto;      /* Garante que a altura seja automática */
+width: auto;       /* Garante que a largura seja automática */
+line-height: 1;    /* Melhora o alinhamento vertical do texto/ícone */
+margin-right: 3px;
+}
+
+.btn-sair:hover {
+background: #e694aa;
+}
+
+
+
+
+ 

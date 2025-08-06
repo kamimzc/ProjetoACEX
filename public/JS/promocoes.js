@@ -58,7 +58,7 @@ window.addCategory = function () {
     const container = document.getElementById("categoriesContainer");
     const input = document.createElement("input");
     input.type = "text";
-    input.className = "categoryInput";
+    input.className = "form_control";
     input.placeholder = "Ex: Calçados";
     container.appendChild(document.createElement("br"));
     container.appendChild(input);
