@@ -39,10 +39,21 @@ border: 1px solid #ddd;
 button:hover {
 background: #e694aa;
 }
+
 .navbar-custom {
 background-color: #fee8f0;/*cor de fundo da navbar*/
 }
 
+/* cor do título navbar */
+.navbar-color {
+  color: #333;
+}
+
+img {
+  margin:10px;
+  width:75px;
+  margin-left:10px;
+}
 
 .container-alt {/*configurações do container de anotações*/
 max-width: 600px;
@@ -103,8 +114,9 @@ line-height: 1;    /* Melhora o alinhamento vertical do texto/ícone */
 background: #e694aa;
 }
 
-.btn-sair i {
-font-size: 12px;   /* Ajustei para combinar com o texto */
+/* ícone de sair */
+.btn-sair i { 
+font-size: 15px;  
 margin-right: 3px; /* Espaço entre ícone e texto */
 }
 

@@ -7,6 +7,17 @@ font-size: 20px;
 background-color: #fee8f0;/*cor de fundo da navbar*/
 }
 
+/* cor do título navbar */
+.navbar-color {
+  color: #333;
+}
+
+img {
+  margin:10px;
+  width:75px;
+  margin-left:10px;
+}
+
 .container-alt {
 max-width: 600px;
 margin: auto;
@@ -35,7 +46,7 @@ border: 1px solid #ddd;
 button {
 background: #F2C2CF;
 color: #333;
-font-size: 16px;
+font-size: 18px;
 cursor: pointer;
 display: flex;
 align-items: center;
@@ -68,6 +79,11 @@ margin-right: 3px;
 background: #e694aa;
 }
 
+/* ícone de sair */
+.btn-sair i { 
+font-size: 15px;  
+margin-right: 3px; /* Espaço entre ícone e texto */
+}
 
 
 

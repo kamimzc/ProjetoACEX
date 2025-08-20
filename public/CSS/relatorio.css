@@ -1,5 +1,4 @@
 body { 
-    background-color: white; 
     font-family: Arial, sans-serif;
     font-size: 20px;
 }
@@ -8,16 +7,28 @@ body {
     background-color: #fee8f0;
 }
 
+img {
+  margin:10px;
+  width:75px;
+  margin-left:10px;
+}
+
+/* cor do título navbar */
+.navbar-color {
+  color: #333;
+}
+
 .container {
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 15px #F5AAC8;
 }
 
-h1 {
+h3 {
     color: #333;
     text-align: center;
     margin-bottom: 30px;
@@ -41,7 +52,7 @@ h1 {
 background: #F2C2CF;
 color: #333;
 padding: 5px 10px;  /* Reduzi o padding */
-font-size: 12px;   /* Aumentei um pouco o tamanho da fonte para ficar legível */
+font-size: 15px;  
 margin-left: 10px;  /* Ajuste a margem conforme necessário */
 height: auto;      /* Garante que a altura seja automática */
 width: auto;       /* Garante que a largura seja automática */
@@ -49,28 +60,29 @@ line-height: 1;    /* Melhora o alinhamento vertical do texto/ícone */
 }
 
 .btn-sair:hover {
-background: #F2C2CF;
+background: #e694aa;
 }
 
-.btn-sair i {
-font-size: 12px;   /* Ajustei para combinar com o texto */
+/* ícone de sair */
+.btn-sair i { 
+font-size: 15px;  
 margin-right: 3px; /* Espaço entre ícone e texto */
 }
 
 
 .btn-export {
-    background-color: #F5AAC8;
+    background-color: #F2C2CF;
     color: #333;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    font-weight: bold;
+    font-size: 18px;
+    padding: 12px;
 }
 
 .btn-export:hover {
-    background-color: #F2C2CF;
+    background-color: #e694aa;
 }
 
 .btn-pdf {
@@ -81,8 +93,9 @@ margin-right: 3px; /* Espaço entre ícone e texto */
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
-    font-size: 14px;
+    font-size: 16px;
     margin: 2px;
+    width: 70px;
 }
 
 .btn-pdf:hover {
@@ -97,8 +110,9 @@ margin-right: 3px; /* Espaço entre ícone e texto */
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
-    font-size: 14px;
+    font-size: 16px;
     margin: 2px;
+    width: 70px;
 }
 
 .btn-email:hover {
