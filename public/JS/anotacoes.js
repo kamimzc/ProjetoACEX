@@ -398,5 +398,12 @@ function sair() {
   }
 }
 
-// Carrega dados automaticamente ao abrir a página
-window.onload = loadData;
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    console.log("Usuário logado:", user.email);
+    loadData();
+  } else {
+    console.log("Nenhum usuário logado, redirecionando...");
+    window.location.href = "/index.html"; // ou a página de login
+  }
+});
