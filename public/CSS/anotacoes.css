@@ -1,6 +1,5 @@
 body {
 font-family: Arial, sans-serif;
-font-size: 20px;
 }
 
 .btn-adicionar{
@@ -39,21 +38,10 @@ border: 1px solid #ddd;
 button:hover {
 background: #e694aa;
 }
-
 .navbar-custom {
 background-color: #fee8f0;/*cor de fundo da navbar*/
 }
 
-/* cor do título navbar */
-.navbar-color {
-  color: #333;
-}
-
-img {
-  margin:10px;
-  width:75px;
-  margin-left:10px;
-}
 
 .container-alt {/*configurações do container de anotações*/
 max-width: 600px;
@@ -94,7 +82,6 @@ display: flex;
 align-items: center;
 justify-content: center;
 gap: 8px;
-font-size: 18px;
 }
 
 
@@ -103,7 +90,7 @@ font-size: 18px;
 background: #F2C2CF;
 color: #333;
 padding: 5px 10px;  /* Reduzi o padding */
-font-size: 15px;   /* Aumentei um pouco o tamanho da fonte para ficar legível */
+font-size: 12px;   /* Aumentei um pouco o tamanho da fonte para ficar legível */
 margin-left: 10px;  /* Ajuste a margem conforme necessário */
 height: auto;      /* Garante que a altura seja automática */
 width: auto;       /* Garante que a largura seja automática */
@@ -111,12 +98,11 @@ line-height: 1;    /* Melhora o alinhamento vertical do texto/ícone */
 }
 
 .btn-sair:hover {
-background: #e694aa;
+background: #F2C2CF;
 }
 
-/* ícone de sair */
-.btn-sair i { 
-font-size: 15px;  
+.btn-sair i {
+font-size: 12px;   /* Ajustei para combinar com o texto */
 margin-right: 3px; /* Espaço entre ícone e texto */
 }
 
