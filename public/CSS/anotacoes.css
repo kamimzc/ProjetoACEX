@@ -1,5 +1,6 @@
 body {
 font-family: Arial, sans-serif;
+font-size: 20px;
 }
 
 .btn-adicionar{
@@ -90,7 +91,7 @@ gap: 8px;
 background: #F2C2CF;
 color: #333;
 padding: 5px 10px;  /* Reduzi o padding */
-font-size: 12px;   /* Aumentei um pouco o tamanho da fonte para ficar legível */
+font-size: 15px;   /* Aumentei um pouco o tamanho da fonte para ficar legível */
 margin-left: 10px;  /* Ajuste a margem conforme necessário */
 height: auto;      /* Garante que a altura seja automática */
 width: auto;       /* Garante que a largura seja automática */
@@ -102,7 +103,7 @@ background: #F2C2CF;
 }
 
 .btn-sair i {
-font-size: 12px;   /* Ajustei para combinar com o texto */
+font-size: 15px;  /* Ajustei para combinar com o texto */
 margin-right: 3px; /* Espaço entre ícone e texto */
 }
 
