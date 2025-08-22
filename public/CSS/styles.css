@@ -126,7 +126,7 @@ word-break: break-word;
 }
 
 .login-container {
-  max-width: 400px;         /* largura máxima da caixa */
+  max-width: 500px;         /* largura máxima da caixa */
   margin: 80px auto;        /* centraliza horizontalmente e dá espaço em cima */
   padding: 20px;
   background: white;        /* fundo branco */
