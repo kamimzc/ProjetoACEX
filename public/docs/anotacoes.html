@@ -41,25 +41,25 @@
       </div>       
   </nav>
 
-  <!--Página de Anotações-->
-<div class="my-4"></div><!--Utilizado como br-->
+    <!--Página de Anotações-->
+  <div class="my-4"></div><!--Utilizado como br-->
 
-<div class="container-alt">
-  <center><h3>Anotações do Bazar 📝</h3></center>
-  <div class="search-bar">
-    <input type="text" id="search" placeholder="Buscar por palavra-chave...">
+  <div class="container-alt">
+    <center><h3>Anotações do Bazar 📝</h3></center>
+    <div class="search-bar">
+      <input type="text" id="search" placeholder="Buscar por palavra-chave...">
+      <br><br>
+      <button class="btn-buscar" onclick="searchNotes()">🔍 Buscar</button>
+      <br>
+      <button class="btn-nova-anotacao" onclick="addNote()">➕ Nova Anotação</button>
+      <br>
+      <button class="btn-nova-tarefa" onclick="showNewTask()" class="checkbox-container" input type="checkbox" id="tarefa1">
+      <label for="tarefa1">➕ Tarefas</label>
+    </div>
     <br><br>
-    <button class="btn-buscar" onclick="searchNotes()">🔍 Buscar</button>
-    <br>
-    <button class="btn-nova-anotacao" onclick="addNote()">➕ Nova Anotação</button>
-    <br>
-    <button class="btn-nova-tarefa" onclick="showNewTask()" class="checkbox-container" input type="checkbox" id="tarefa1">
-    <label for="tarefa1">➕ Tarefas</label>
-  </div>
-  <br><br>
-  <div id="notes" class="note-container"></div>
-  <div id="tasks" class="task-container"></div>
-  <div id="calendar"></div>
+    <div id="notes" class="note-container"></div>
+    <div id="tasks" class="task-container"></div>
+    <div id="calendar"></div>
 
   <!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script> 

@@ -1,334 +1,178 @@
- // Configuração do Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyBg_LBg0LoH7ADKPHN571ARxEjhgUN2TmE",
-            authDomain: "bazar-46805.firebaseapp.com",
-            projectId: "bazar-46805",
-            storageBucket: "bazar-46805.appspot.com",
-            messagingSenderId: "296506105856",
-            appId: "1:296506105856:web:bb261ba6c4a2406d52b8e5"
-        };
 
-        // Inicialize o Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        
-        // Inicialize o EmailJS com seu User ID
-        emailjs.init('M7OQR6vfh7wY1EgdG');
-        
-        // Variável para armazenar os dados das vendas
-        let salesData = [];
-        
-        // Função para mostrar mensagens de status
-        function showStatus(message, type) {
-            const statusMessage = document.getElementById('statusMessage');
-            statusMessage.textContent = message;
-            statusMessage.className = 'status-message ' + type;
-        }
-        
-        // Função para carregar os dados das vendas
-        async function loadSalesData() {
-            showStatus("Carregando dados...", "connecting");
-            
-            try {
-                let query = db.collection('vendas').orderBy('data', 'desc');
-                
-                // Aplicar filtros
-                const startDate = document.getElementById('startDate').value;
-                const endDate = document.getElementById('endDate').value;
-                const buyerName = document.getElementById('searchBuyer').value.toLowerCase();
-                
-                if (startDate) {
-                    query = query.where('data', '>=', startDate);
-                }
-                
-                if (endDate) {
-                    query = query.where('data', '<=', endDate);
-                }
-                
-                const querySnapshot = await query.get();
-                salesData = [];
-                
-                querySnapshot.forEach(doc => {
-                    const sale = doc.data();
-                    sale.id = doc.id;
-                    
-                    // Aplicar filtro por nome do comprador (se existir)
-                    if (!buyerName || sale.comprador.toLowerCase().includes(buyerName)) {
-                        salesData.push(sale);
-                    }
-                });
-                
-                renderSalesTable();
-                showStatus(`Carregadas ${salesData.length} vendas`, "success");
-                
-            } catch (error) {
-                console.error("Erro ao carregar vendas:", error);
-                showStatus("Erro ao carregar vendas: " + error.message, "error");
-            }
-        }
-        
-        // Função para renderizar a tabela de vendas
-        function renderSalesTable() {
-            const tableBody = document.getElementById('salesTableBody');
-            tableBody.innerHTML = '';
-            
-            if (salesData.length === 0) {
-                const row = document.createElement('tr');
-                row.innerHTML = '<td colspan="6" style="text-align: center;">Nenhuma venda encontrada</td>';
-                tableBody.appendChild(row);
-                return;
-            }
-            
-            let total = 0;
-            
-            salesData.forEach(sale => {
-                const row = document.createElement('tr');
-                
-                row.innerHTML = `
-                    <td>${formatDate(sale.data)}</td>
-                    <td>R$ ${sale.valor.toFixed(2)}</td>
-                    <td>${sale.comprador}</td>
-                    <td>${sale.telefone || '-'}</td>
-                    <td>${sale.email || '-'}</td>
-                    <td class="action-buttons">
-                        <button class="btn-pdf" onclick="generateSalePDF('${sale.id}')">Baixar PDF</button>
-                        ${sale.email ? `<button class="btn-email" onclick="generateSalePDF('${sale.id}', '${sale.email}')">Enviar Email</button>` : ''}
-                    </td>
-                `;
-                
-                tableBody.appendChild(row);
-                total += sale.valor;
-            });
-            
-            // Adicionar linha de total
-            const totalRow = document.createElement('tr');
-            totalRow.style.fontWeight = 'bold';
-            totalRow.style.backgroundColor = '#fee8f0';
-            totalRow.innerHTML = `
-                <td>TOTAL</td>
-                <td>R$ ${total.toFixed(2)}</td>
-                <td colspan="4"></td>
-            `;
-            tableBody.appendChild(totalRow);
-        }
-        
-        // Função para formatar a data
-        function formatDate(dateString) {
-            if (!dateString) return '-';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('pt-BR');
-        }
-        
-        // Função para exportar para CSV
-        function exportToCSV() {
-            if (salesData.length === 0) {
-                showStatus("Nenhum dado para exportar", "error");
-                return;
-            }
-            
-            try {
-                // Criar cabeçalho CSV
-                const headers = ['Data', 'Valor (R$)', 'Comprador', 'Telefone', 'Email'];
-                let csvContent = headers.join(';') + '\n';
-                
-                // Adicionar linhas de dados
-                salesData.forEach(sale => {
-                    const row = [
-                        formatDate(sale.data),
-                        sale.valor.toFixed(2).replace('.', ','),
-                        `"${sale.comprador.replace(/"/g, '""')}"`,
-                        sale.telefone || '',
-                        sale.email || ''
-                    ];
-                    csvContent += row.join(';') + '\n';
-                });
-                
-                // Criar e baixar o arquivo CSV
-                const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                
-                link.setAttribute('href', url);
-                link.setAttribute('download', `vendas_bazar.csv`);
-                link.style.display = 'none';
-                
-                document.body.appendChild(link);
-                link.click();
-                
-                // Limpeza
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-                
-                showStatus("Arquivo CSV gerado com sucesso!", "success");
-                
-            } catch (error) {
-                console.error("Erro ao exportar CSV:", error);
-                showStatus("Erro ao exportar CSV: " + error.message, "error");
-            }
-        }
-        
-       async function sendSaleByEmail(saleId, recipientEmail) {
+// Configuração do Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyBg_LBg0LoH7ADKPHN571ARxEjhgUN2TmE",
+    authDomain: "bazar-46805.firebaseapp.com",
+    projectId: "bazar-46805",
+    storageBucket: "bazar-46805.firebasestorage.app",
+    messagingSenderId: "296506105856",
+    appId: "1:296506105856:web:bb261ba6c4a2406d52b8e5"
+};
+
+// Inicialize o Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Elementos da UI
+const statusMessage = document.getElementById('statusMessage');
+const form = document.getElementById('itemForm');
+
+// Função para mostrar mensagens de status
+function showStatus(message, type, details = '') {
+    statusMessage.innerHTML = message + (details ? `<div class="error-details">${details}</div>` : '');
+    statusMessage.className = 'status-message ' + type;
+    
+    // Rolagem automática para a mensagem
+    statusMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Função para traduzir erros comuns do Firebase
+function translateFirebaseError(error) {
+    const errorMap = {
+        'permission-denied': 'Permissão negada: Você não tem acesso ao banco de dados',
+        'unauthenticated': 'Não autenticado: Faça login novamente',
+        'invalid-argument': 'Dados inválidos foram enviados',
+        'not-found': 'Coleção não encontrada',
+        'already-exists': 'Documento já existe',
+        'resource-exhausted': 'Limite de cota excedido',
+        'failed-precondition': 'Operação não permitida no estado atual',
+        'aborted': 'Operação abortada',
+        'unavailable': 'Serviço indisponível no momento',
+        'internal': 'Erro interno do servidor'
+    };
+    
+    return errorMap[error.code] || error.message;
+}
+
+// Adiciona evento de submit ao formulário
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Mostra mensagem de conexão
+    showStatus("🔌 Conectando ao banco de dados...", "connecting");
+    
+    // Desabilita o botão para evitar múltiplos cliques
+    const submitButton = form.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+
     try {
-        showStatus("Preparando para enviar email...", "connecting");
+        // Captura os valores dos campos
+        const valor = parseFloat(document.getElementById('itemValor').value);
+        const formaPagamento = document.querySelector('select.form-control').value;
+        const data = document.getElementById('itemData').value;
+        const comprador = document.getElementById('itemComprador').value || 'Anônimo';
+        const telefone = document.getElementById('itemTelefone').value || '';
+        const email = document.getElementById('itemEmail').value || '';
+
+        // Validação avançada
+        if (isNaN(valor)) {
+            throw new Error('O valor deve ser um número');
+        }
         
+        if (valor <= 0) {
+            throw new Error('O valor deve ser maior que zero');
+        }
         
-        // Buscar os dados da venda
-        const saleDoc = await db.collection('vendas').doc(saleId).get();
-        const sale = saleDoc.data();
-        
-        // Enviar email via EmailJS
-        const response = await emailjs.send('service_t7ygerp', 'template_ckzs5vu', {
-            to_email: recipientEmail,
-            to_name: sale.comprador,
-            from_name: "Bazar São Jerônimo",
-            sale_id: saleId,
-            sale_date: formatDate(sale.data),
-            sale_amount: `R$ ${sale.valor.toFixed(2)}`,
-            message: "Segue as informações da sua compra no Bazar Beneficente São Jerônimo."
+        if (!data) {
+            throw new Error('A data é obrigatória');
+        }
+
+        // Mostra que está enviando dados
+        showStatus("📤 Enviando dados para o servidor...", "connecting");
+
+        // Salva no Firestore
+        const docRef = await db.collection('vendas').add({
+            valor: valor,
+            formaPagamento: formaPagamento,
+            data: data,
+            comprador: comprador,
+            telefone: telefone,
+            email: email,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
+
+        // Mensagem de sucesso com ID do documento
+        showStatus("Venda registrada com sucesso!", "success");
         
-        showStatus("Email enviado com sucesso para " + recipientEmail, "success");
-        return response;
+        // Limpa o formulário
+        form.reset();
+        document.getElementById('itemData').value = getCurrentDate();
+        
+        // Oculta a mensagem após 5 segundos
+        setTimeout(() => {
+            statusMessage.style.display = 'none';
+        }, 5000);
+        
     } catch (error) {
-        console.error("Erro ao enviar email:", error);
-        showStatus("Erro ao enviar email: " + error.message, "error");
-        throw error;
+        console.error("Erro detalhado:", error);
+        
+        // Mensagem de erro detalhada
+        let errorMessage = "❌ Erro ao registrar venda";
+        let errorDetails = "";
+        
+        if (error.code) {
+            // Erro do Firebase
+            errorMessage = translateFirebaseError(error);
+            errorDetails = `Código: ${error.code}\nMensagem: ${error.message}`;
+            
+            // Se for erro de permissão, sugere ação
+            if (error.code === 'permission-denied') {
+                errorDetails += "\n\nVerifique se você está logado e tem permissões suficientes.";
+            }
+        } else {
+            // Erro de validação ou outro erro JavaScript
+            errorDetails = error.message;
+        }
+        
+        showStatus(errorMessage, "error", errorDetails);
+        
+        // Se for erro de conexão, sugere tentar novamente
+        if (error.code === 'unavailable' || error.message.includes('offline')) {
+            showStatus(`${errorMessage} - Tentando reconectar...`, "warning", errorDetails);
+            
+            // Tenta reconectar após 5 segundos
+            setTimeout(() => {
+                showStatus("Tentando reconectar ao banco de dados...", "connecting");
+            }, 5000);
+        }
+        
+    } finally {
+        submitButton.disabled = false;
+    }
+});
+
+// Funções auxiliares
+function getCurrentDate() {
+    const now = new Date();
+    return now.toISOString().split('T')[0];
+}
+
+document.getElementById('itemData').value = getCurrentDate();
+
+function sair() {
+    if(confirm('Tem certeza que deseja sair do sistema?')) {
+        firebase.auth().signOut().then(() => {
+            window.location.href = '/index.html';
+        });
     }
 }
 
+// Monitora o estado da conexão
+firebase.firestore().enableNetwork()
+    .then(() => console.log("Online"))
+    .catch(err => console.error("Erro de conexão:", err));
 
-
-        
-        // Função para gerar PDF completo (com logo e formatação para download)
-        async function generatePDFForEmail(saleId) {
-            try {
-                const saleDoc = await db.collection('vendas').doc(saleId).get();
-                const sale = saleDoc.data();
-                
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
-                
-                // Adicionar logo
-                const logoData = await loadLogo();
-                if (logoData) {
-                    doc.addImage(logoData, 'PNG', 80, 10, 50, 50);
-                }
-                
-                // Configurações do documento
-                doc.setFontSize(16);
-                doc.setTextColor(40);
-                doc.text('Comprovante de Venda', 105, 70, null, null, 'center');
-                doc.text('Bazar Beneficente São Jerônimo', 105, 80, null, null, 'center');
-                
-                // Informações da venda
-                doc.setFontSize(12);
-                doc.text(`Data: ${formatDate(sale.data)}`, 20, 100);
-                doc.text(`Comprador: ${sale.comprador}`, 20, 110);
-                doc.text(`Telefone: ${sale.telefone || 'Não informado'}`, 20, 120);
-                
-                // Linha divisória
-                doc.setDrawColor(200);
-                doc.line(20, 130, 190, 130);
-                
-                // Total da venda
-                doc.setFontSize(14);
-                doc.setFont(undefined, 'bold');
-                doc.text(`Valor Total: R$ ${sale.valor.toFixed(2)}`, 20, 140);
-                
-                // Rodapé
-                doc.setFontSize(10);
-                doc.setTextColor(100);
-                doc.text('Obrigado por sua compra no Bazar Beneficente São Jerônimo!', 105, 280, null, null, 'center');
-                
-                // Retorna o PDF como base64
-                return doc.output('dataurlstring');
-            } catch (error) {
-                console.error("Erro ao gerar PDF:", error);
-                throw error;
-            }
-        }
-        
-        // Função principal para gerar PDF (com opção de enviar por email)
-        async function generateSalePDF(saleId, email = null) {
-            try {
-                if (email) {
-                    // Se tiver email, envia por email usando a versão simplificada
-                    return await sendSaleByEmail(saleId, email);
-                } else {
-                    // Caso contrário, faz download usando a versão completa
-                    const pdfData = await generatePDFForEmail(saleId);
-                    const blob = dataURItoBlob(pdfData);
-                    saveAs(blob, `comprovante_venda.pdf`);
-                    showStatus("PDF gerado com sucesso!", "success");
-                }
-            } catch (error) {
-                console.error("Erro ao gerar PDF:", error);
-                showStatus("Erro ao gerar PDF: " + error.message, "error");
-            }
-        }
-        
-        // Função auxiliar para carregar logo
-        async function loadLogo() {
-            try {
-                const response = await fetch('/public/docs/imagens/logo.png');
-                const blob = await response.blob();
-                return new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result);
-                    reader.readAsDataURL(blob);
-                });
-            } catch {
-                return null;
-            }
-        }
-        
-        // Função para converter data URI para Blob
-        function dataURItoBlob(dataURI) {
-            const byteString = atob(dataURI.split(',')[1]);
-            const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-            const ab = new ArrayBuffer(byteString.length);
-            const ia = new Uint8Array(ab);
-            
-            for (let i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
-            }
-            
-            return new Blob([ab], { type: mimeString });
-        }
-        
-        // Função para salvar o Blob como arquivo
-        function saveAs(blob, filename) {
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-        
-        // Função para sair do sistema
-        function sair() {
-            if(confirm('Tem certeza que deseja sair do sistema?')) {
-                firebase.auth().signOut().then(() => {
-                    window.location.href = '/index.html';
-                });
-            }
-        }
-        
-        // Verificação de autenticação ao carregar a página
-        firebase.auth().onAuthStateChanged((user) => {
-            if (!user) {
-                window.location.href = '/index.html';
-            } else {
-                // Carrega os dados quando a página é aberta
-                loadSalesData();
-                
-                // Define a data final como hoje e a inicial como 30 dias atrás
-                const endDate = new Date();
-                const startDate = new Date();
-                startDate.setDate(startDate.getDate() - 30);
-                
-                document.getElementById('endDate').valueAsDate = endDate;
-                document.getElementById('startDate').valueAsDate = startDate;
-            }
-        });
+// Verificação de autenticação
+firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+        window.location.href = '/index.html';
+    } else {
+        // Verifica permissões ao carregar a página
+        db.collection('vendas').limit(1).get()
+            .then(() => console.log("Permissões OK"))
+            .catch(err => {
+                showStatus("Verifique suas permissões de acesso", "warning", 
+                        translateFirebaseError(err));
+            });
+    }
+});
