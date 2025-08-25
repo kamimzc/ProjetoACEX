@@ -88,8 +88,8 @@
                     <td>${formatDate(sale.data)}</td>
                     <td>R$ ${sale.valor.toFixed(2)}</td>
                     <td>${sale.comprador}</td>
-                    <td>${sale.telefone || '-'}</td>
-                    <td>${sale.email || '-'}</td>
+                    <td class="truncate-cell" title="${sale.telefone || '-'}">${sale.telefone || '-'}</td>
+                    <td class="truncate-cell" title="${sale.email || '-'}">${sale.email || '-'}</td>
                     <td class="action-buttons">
                         <button class="btn-pdf" onclick="generateSalePDF('${sale.id}')">Baixar PDF</button>
                         ${sale.email ? `<button class="btn-email" onclick="generateSalePDF('${sale.id}', '${sale.email}')">Enviar Email</button>` : ''}

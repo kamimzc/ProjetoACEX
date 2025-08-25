@@ -167,3 +167,19 @@ tr:hover {
     gap: 5px;
     flex-wrap: wrap;
 }
+
+.truncate-cell {
+  max-width: 150px;     /* largura máxima */
+  white-space: nowrap;  /* não quebra linha */
+  overflow: hidden;     /* esconde o excesso */
+  text-overflow: ellipsis; /* adiciona "..." */
+}
+
+@media (max-width: 768px) {
+  .truncate-cell {
+    max-width: 90px;
+    font-size: 14px;
+  }
+}
+
+
