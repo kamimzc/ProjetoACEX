@@ -58,7 +58,8 @@ form.addEventListener('submit', async function(e) {
     try {
         // Captura os valores dos campos
         const valor = parseFloat(document.getElementById('itemValor').value);
-        const formaPagamento = document.querySelector('select.form-control').value;
+        const quantidadeitens = parseFloat(document.getElementById('itemQuantidade').value);
+         const formaPagamento = document.getElementById('formaPagamento').value || '';
         const data = document.getElementById('itemData').value;
         const comprador = document.getElementById('itemComprador').value || 'Anônimo';
         const telefone = document.getElementById('itemTelefone').value || '';
@@ -83,6 +84,7 @@ form.addEventListener('submit', async function(e) {
         // Salva no Firestore
         const docRef = await db.collection('vendas').add({
             valor: valor,
+            quantidadeitens: quantidadeitens,
             formaPagamento: formaPagamento,
             data: data,
             comprador: comprador,

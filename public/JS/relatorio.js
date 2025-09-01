@@ -194,60 +194,79 @@
         showStatus("Erro ao enviar email: " + error.message, "error");
         throw error;
     }
+}       
+        // Função para gerar PDF completo (com logo e formatação para download)
+async function generatePDFForEmail(saleId) {
+    try {
+        const saleDoc = await db.collection('vendas').doc(saleId).get();
+        const sale = saleDoc.data();
+
+        const { jsPDF } = window.jspdf;
+
+        // Criar documento no formato de ticket (80mm x 200mm)
+       const doc = new jsPDF({
+    unit: "mm",
+    format: [80, 200] // largura 80mm, altura ajustável
+});
+
+let y = 10;
+
+// Adicionar logo (opcional)
+const logoData = await loadLogo();
+if (logoData) {
+    doc.addImage(logoData, "PNG", 25, y, 30, 20);
+    y += 25;
 }
 
+// Cabeçalho oficial
+doc.setFontSize(14);
+doc.setFont(undefined, "bold");
+doc.text("Comprovante de Venda", 40, y, { align: "center" });
+y += 8;
 
+doc.setFontSize(11);
+doc.setFont(undefined, "normal");
+doc.text("Bazar Beneficente São Jerônimo", 40, y, { align: "center" }); y += 6;
+doc.text("CNPJ: 00.000.000/0001-00", 40, y, { align: "center" }); y += 6;
+doc.text("Rua Exemplo, 123 - Centro - Cidade/UF", 40, y, { align: "center" }); y += 8;
+doc.line(5, y, 75, y); y += 8;
 
-        
-        // Função para gerar PDF completo (com logo e formatação para download)
-        async function generatePDFForEmail(saleId) {
-            try {
-                const saleDoc = await db.collection('vendas').doc(saleId).get();
-                const sale = saleDoc.data();
-                
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
-                
-                // Adicionar logo
-                const logoData = await loadLogo();
-                if (logoData) {
-                    doc.addImage(logoData, 'PNG', 80, 10, 50, 50);
-                }
-                
-                // Configurações do documento
-                doc.setFontSize(16);
-                doc.setTextColor(40);
-                doc.text('Comprovante de Venda', 105, 70, null, null, 'center');
-                doc.text('Bazar Beneficente São Jerônimo', 105, 80, null, null, 'center');
-                
-                // Informações da venda
-                doc.setFontSize(12);
-                doc.text(`Data: ${formatDate(sale.data)}`, 20, 100);
-                doc.text(`Comprador: ${sale.comprador}`, 20, 110);
-                doc.text(`Telefone: ${sale.telefone || 'Não informado'}`, 20, 120);
-                
-                // Linha divisória
-                doc.setDrawColor(200);
-                doc.line(20, 130, 190, 130);
-                
-                // Total da venda
-                doc.setFontSize(14);
-                doc.setFont(undefined, 'bold');
-                doc.text(`Valor Total: R$ ${sale.valor.toFixed(2)}`, 20, 140);
-                
-                // Rodapé
-                doc.setFontSize(10);
-                doc.setTextColor(100);
-                doc.text('Obrigado por sua compra no Bazar Beneficente São Jerônimo!', 105, 280, null, null, 'center');
-                
-                // Retorna o PDF como base64
-                return doc.output('dataurlstring');
-            } catch (error) {
-                console.error("Erro ao gerar PDF:", error);
-                throw error;
-            }
-        }
-        
+// Dados da venda
+doc.setFontSize(10);
+doc.text(`Venda ID: ${saleId}`, 5, y); y += 5;
+doc.text(`Data/Hora: ${sale.data}`, 5, y); y += 5;
+doc.text(`Comprador: ${sale.comprador || "Não informado"}`, 5, y); y += 5;
+doc.text(`Telefone: ${sale.telefone || "Não informado"}`, 5, y); y += 5;
+doc.text(`Email: ${sale.email || "Não informado"}`, 5, y); y += 8;
+doc.line(5, y, 75, y); y += 8;
+
+// Mostrar quantidade de itens
+doc.text(`Quantidade total de itens: ${sale.quantidadeitens}`, 5, y);  y += 5;
+doc.text(`Forma de pagamento: ${sale.formaPagamento}`, 5, y);  y += 5;
+y += 8;
+
+// Total
+doc.setFont(undefined, "bold");
+doc.setFontSize(11);
+doc.text(`VALOR TOTAL: R$ ${sale.valor.toFixed(2)}`, 75, y, { align: "right" });
+y += 12;
+
+// Rodapé
+doc.setFontSize(9);
+doc.setFont(undefined, "normal");
+doc.text("Este documento comprova a venda realizada", 40, y, { align: "center" }); y += 4;
+doc.text("no Bazar Beneficente São Jerônimo.", 40, y, { align: "center" }); y += 4;
+doc.text("Obrigado por apoiar nossa causa!", 40, y, { align: "center" });
+
+// Retorna o PDF como base64
+return doc.output("dataurlstring");
+
+    } catch (error) {
+        console.error("Erro ao gerar PDF:", error);
+        throw error;
+    }
+}
+
         // Função principal para gerar PDF (com opção de enviar por email)
         async function generateSalePDF(saleId, email = null) {
             try {
