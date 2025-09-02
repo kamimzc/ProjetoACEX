@@ -169,17 +169,22 @@ tr:hover {
 }
 
 .truncate-cell {
-  max-width: 150px;     /* largura máxima */
-  white-space: nowrap;  /* não quebra linha */
-  overflow: hidden;     /* esconde o excesso */
-  text-overflow: ellipsis; /* adiciona "..." */
+  max-width: 150px;
+  white-space: nowrap;
+  overflow-x: auto; /* Permite rolagem horizontal */
+  overflow-y: hidden; /* Esconde a rolagem vertical, que não é necessária */
+  -ms-overflow-style: none; /* Esconde a barra de rolagem no Internet Explorer e Edge */
+  scrollbar-width: none; /* Esconde a barra de rolagem no Firefox */
 }
 
 @media (max-width: 768px) {
   .truncate-cell {
     max-width: 90px;
-    font-size: 14px;
+    font-size: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
-
 
