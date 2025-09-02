@@ -54,15 +54,27 @@ async function enviarEmails() {
 }
 
 // Adiciona uma nova categoria (input) ao clicar no botão
-window.addCategory = function () {
-    const container = document.getElementById("categoriesContainer");
-    const input = document.createElement("input");
-    input.type = "text";
-    input.className = "form_control";
-    input.placeholder = "Ex: Calçados";
-    container.appendChild(document.createElement("br"));
-    container.appendChild(input);
-};
+   function addCategory() {
+    const input = document.getElementById("newCategory");
+    const newCategory = input.value.trim(); // pega o texto digitado
+
+    if (newCategory) {
+      const select = document.getElementById("categorySelect");
+
+      // cria a nova opção
+      const option = document.createElement("option");
+      option.value = newCategory.toLowerCase();
+      option.textContent = newCategory;
+
+      // adiciona no select
+      select.appendChild(option);
+
+      // limpa o campo de texto
+      input.value = "";
+    } else {
+      alert("Digite uma categoria antes de adicionar!");
+    }
+  }
 
 // Captura o envio do formulário e envia os e-mails
 document.getElementById("promoForm").addEventListener("submit", async function (e) {
