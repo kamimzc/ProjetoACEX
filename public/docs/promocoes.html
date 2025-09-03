@@ -52,21 +52,20 @@
             <label>Desconto (%): </label>
                 <input class="form-control" type="number" id="promoDiscount" min="1" max="100">
             <br>
-            <div><label for="categorias">Categorias:</label>
+            <label for="categorias">Categorias:</label>
             <select id="categorias" name="categorias">
+            
             <option value="">Selecione uma categoria</option>
-            <option value="camisas">Camisas</option>
-            <option value="calcas">Calças</option>
-            <option value="sapatos">Sapatos</option>
-            <option value="acessorios">Acessórios</option>
-            </select></div>
-            <br><br>
+            </select>
+            <br>
+            <button type="button" id="btnAddCategoria">Adicionar categoria</button>
+            <div id="novaCategoriaDiv" style="display:none;">
 
-            <input type="text" id="newCategory" placeholder="Digite nova categoria">
-
-            <button type="button" onclick="addCategory()">Adicionar categoria</button>
-            <br><br>
-            <center> <button type="submit" class="btn-enviarpromo">Enviar Promoção</button> </center>
+            <input type="text" id="novaCategoriaInput" placeholder="Digite nova categoria">
+            <button type="button" id="salvarCategoria">Salvar categoria</button>
+            </div>
+            
+            <button type="button" id="btnEnviarPromocao">Enviar promoção</button>
         </form>
     </div>
 

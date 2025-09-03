@@ -54,27 +54,65 @@ async function enviarEmails() {
 }
 
 // Adiciona uma nova categoria (input) ao clicar no botão
-   function addCategory() {
-    const input = document.getElementById("newCategory");
-    const newCategory = input.value.trim(); // pega o texto digitado
+              document.addEventListener("DOMContentLoaded", () => {
 
-    if (newCategory) {
-      const select = document.getElementById("categorySelect");
+              // Mostrar campo de nova categoria
+              document.getElementById("btnAddCategoria").addEventListener("click", () => {
+                document.getElementById("novaCategoriaDiv").style.display = "block";
+              });
+              async function carregarCategorias() {
+                const categoriasSelect = document.getElementById("categorias");
+                categoriasSelect.innerHTML = "<option value=''>Selecione uma categoria</option>";
 
-      // cria a nova opção
-      const option = document.createElement("option");
-      option.value = newCategory.toLowerCase();
-      option.textContent = newCategory;
+                const snapshot = await firebase.firestore().collection("categorias").get();
+                snapshot.forEach(doc => {
+                  const option = document.createElement("option");
+                  option.value = doc.data().nome;
+                  option.textContent = doc.data().nome;
+                  categoriasSelect.appendChild(option);
+                });
+              }
 
-      // adiciona no select
-      select.appendChild(option);
+              // Salvar nova categoria no banco
+              const db = firebase.firestore();
+              const categoriasRef = db.collection("categorias"); 
+              // Teste de conexão com Firestore
+              db.collection("test").add({ ok: true })
+                .then(() => console.log("Firestore conectado!"))
+                .catch(err => console.error("Erro de conexão Firestore:", err));
 
-      // limpa o campo de texto
-      input.value = "";
-    } else {
-      alert("Digite uma categoria antes de adicionar!");
-    }
-  }
+
+              document.getElementById("salvarCategoria").addEventListener("click", async () => {
+                const input = document.getElementById("novaCategoriaInput");
+                if (input.value.trim() !== "") {
+                  await categoriasRef.add({ nome: input.value });
+                  input.value = "";
+                  document.getElementById("novaCategoriaDiv").style.display = "none";
+                  carregarCategorias(); // atualiza o select
+                }
+              });
+
+              // Enviar promoção
+              document.getElementById("btnEnviarPromocao").addEventListener("click", async () => {
+                const categoria = document.getElementById("categorias").value;
+                if (!categoria) {
+                  alert("Selecione uma categoria!");
+                  return;
+                }
+
+                await db.collection("promocoes").add({
+                  categoria: categoria,
+                  data: new Date()
+                });
+
+                alert("Promoção enviada com sucesso!");
+              });
+
+              // Carregar categorias ao iniciar
+              carregarCategorias();
+
+            });
+
 
 // Captura o envio do formulário e envia os e-mails
 document.getElementById("promoForm").addEventListener("submit", async function (e) {

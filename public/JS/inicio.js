@@ -1,4 +1,3 @@
-
 // Configuração do Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyBg_LBg0LoH7ADKPHN571ARxEjhgUN2TmE",
@@ -21,8 +20,6 @@ const form = document.getElementById('itemForm');
 function showStatus(message, type, details = '') {
     statusMessage.innerHTML = message + (details ? `<div class="error-details">${details}</div>` : '');
     statusMessage.className = 'status-message ' + type;
-    
-    // Rolagem automática para a mensagem
     statusMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
@@ -40,7 +37,6 @@ function translateFirebaseError(error) {
         'unavailable': 'Serviço indisponível no momento',
         'internal': 'Erro interno do servidor'
     };
-    
     return errorMap[error.code] || error.message;
 }
 
@@ -48,41 +44,28 @@ function translateFirebaseError(error) {
 form.addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    // Mostra mensagem de conexão
     showStatus("🔌 Conectando ao banco de dados...", "connecting");
-    
-    // Desabilita o botão para evitar múltiplos cliques
     const submitButton = form.querySelector('button[type="submit"]');
     submitButton.disabled = true;
 
     try {
         // Captura os valores dos campos
-        const valor = parseFloat(document.getElementById('itemValor').value);
+        const valor = parseFloat(document.getElementById('itemValor').value.replace(/\./g,'').replace(',','.'));
         const quantidadeitens = parseFloat(document.getElementById('itemQuantidade').value);
-         const formaPagamento = document.getElementById('formaPagamento').value || '';
+        const formaPagamento = document.getElementById('formaPagamento').value || '';
         const data = document.getElementById('itemData').value;
         const comprador = document.getElementById('itemComprador').value || 'Anônimo';
         const telefone = document.getElementById('itemTelefone').value || '';
         const email = document.getElementById('itemEmail').value || '';
 
         // Validação avançada
-        if (isNaN(valor)) {
-            throw new Error('O valor deve ser um número');
-        }
-        
-        if (valor <= 0) {
-            throw new Error('O valor deve ser maior que zero');
-        }
-        
-        if (!data) {
-            throw new Error('A data é obrigatória');
-        }
+        if (isNaN(valor) || valor <= 0) throw new Error('O valor deve ser um número maior que zero');
+        if (!data) throw new Error('A data é obrigatória');
 
-        // Mostra que está enviando dados
         showStatus("📤 Enviando dados para o servidor...", "connecting");
 
         // Salva no Firestore
-        const docRef = await db.collection('vendas').add({
+        await db.collection('vendas').add({
             valor: valor,
             quantidadeitens: quantidadeitens,
             formaPagamento: formaPagamento,
@@ -93,51 +76,23 @@ form.addEventListener('submit', async function(e) {
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        // Mensagem de sucesso com ID do documento
         showStatus("Venda registrada com sucesso!", "success");
-        
-        // Limpa o formulário
         form.reset();
         document.getElementById('itemData').value = getCurrentDate();
-        
-        // Oculta a mensagem após 5 segundos
+
         setTimeout(() => {
             statusMessage.style.display = 'none';
         }, 5000);
         
     } catch (error) {
         console.error("Erro detalhado:", error);
-        
-        // Mensagem de erro detalhada
         let errorMessage = "❌ Erro ao registrar venda";
-        let errorDetails = "";
-        
+        let errorDetails = error.message || '';
         if (error.code) {
-            // Erro do Firebase
             errorMessage = translateFirebaseError(error);
             errorDetails = `Código: ${error.code}\nMensagem: ${error.message}`;
-            
-            // Se for erro de permissão, sugere ação
-            if (error.code === 'permission-denied') {
-                errorDetails += "\n\nVerifique se você está logado e tem permissões suficientes.";
-            }
-        } else {
-            // Erro de validação ou outro erro JavaScript
-            errorDetails = error.message;
         }
-        
         showStatus(errorMessage, "error", errorDetails);
-        
-        // Se for erro de conexão, sugere tentar novamente
-        if (error.code === 'unavailable' || error.message.includes('offline')) {
-            showStatus(`${errorMessage} - Tentando reconectar...`, "warning", errorDetails);
-            
-            // Tenta reconectar após 5 segundos
-            setTimeout(() => {
-                showStatus("Tentando reconectar ao banco de dados...", "connecting");
-            }, 5000);
-        }
-        
     } finally {
         submitButton.disabled = false;
     }
@@ -148,9 +103,9 @@ function getCurrentDate() {
     const now = new Date();
     return now.toISOString().split('T')[0];
 }
-
 document.getElementById('itemData').value = getCurrentDate();
 
+// Logout
 function sair() {
     if(confirm('Tem certeza que deseja sair do sistema?')) {
         firebase.auth().signOut().then(() => {
@@ -159,22 +114,35 @@ function sair() {
     }
 }
 
-// Monitora o estado da conexão
+// Máscara do valor
+const itemValorInput = document.getElementById('itemValor');
+itemValorInput.addEventListener('input', () => {
+    let valor = itemValorInput.value.replace(/\D/g, '');
+    valor = (valor / 100).toFixed(2);
+    valor = valor.replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    itemValorInput.value = valor;
+});
+
+// Máscara do telefone
+const telefoneInput = document.getElementById('itemTelefone');
+telefoneInput.addEventListener('input', () => {
+    let valor = telefoneInput.value.replace(/\D/g, '');
+    if (valor.length > 11) valor = valor.slice(0, 11);
+    if (valor.length <= 10) valor = valor.replace(/^(\d{2})(\d{4})(\d{0,4})$/, "($1) $2-$3");
+    else valor = valor.replace(/^(\d{2})(\d{5})(\d{0,4})$/, "($1) $2-$3");
+    telefoneInput.value = valor;
+});
+
+// Monitoramento de conexão e autenticação
 firebase.firestore().enableNetwork()
     .then(() => console.log("Online"))
     .catch(err => console.error("Erro de conexão:", err));
 
-// Verificação de autenticação
 firebase.auth().onAuthStateChanged((user) => {
-    if (!user) {
-        window.location.href = '/index.html';
-    } else {
-        // Verifica permissões ao carregar a página
+    if (!user) window.location.href = '/index.html';
+    else {
         db.collection('vendas').limit(1).get()
             .then(() => console.log("Permissões OK"))
-            .catch(err => {
-                showStatus("Verifique suas permissões de acesso", "warning", 
-                        translateFirebaseError(err));
-            });
+            .catch(err => showStatus("Verifique suas permissões de acesso", "warning", translateFirebaseError(err)));
     }
 });

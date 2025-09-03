@@ -50,26 +50,27 @@
         <center><h3>Registro de Vendas</h3></center>
         <form id="itemForm">
                 <label for="itemValor">Valor:</label>
-                    <div class="input-group mb-3">
-                    <span class="input-group-text">R$</span> <!-- coloca o R$ dentro da caixa de input do valor-->
-                    <input type="text" class="form-control" id="itemValor" placeholder="125,25"> <!-- a classe form-control (do bootstrap) padroniza o tamanho das caixas -->
-                    </div>
-                            <label for="itemQuantidade">Quantidade de itens:</label>
-        <select class="form-control" id="itemQuantidade">
-            <option value="" disabled selected>Selecione uma opção</option>
+                <div class="input-group mb-3">
+                <span class="input-group-text">R$</span>
+                <input type="text" class="form-control" id="itemValor" placeholder="100,00">
+                </div>
+                
+                <label for="itemQuantidade">Quantidade de itens:</label>
+                <select class="form-control" id="itemQuantidade">
+                <option value="" disabled selected>Selecione uma opção</option>
             <!-- Pode aumentar até o limite que você quiser -->
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-        </select>
-        <br>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+                <br>
                 <label for="formaPagamento"> Forma de pagamento: </label>
                 <select class="form-control" id="formaPagamento">
                     <option placeholder> Selecione uma opção </option>
@@ -85,7 +86,7 @@
                 <label> Nome do comprador: (Opcional)</label>
                     <input class="form-control" type="text" id="itemComprador" placeholder="Carlos Silva">
                 <br> 
-                <label> Número de telefone: (Opcional)</label>
+                <label for="telefone"> Número de telefone: (Opcional)</label>
                     <input class="form-control" type="text" id="itemTelefone" placeholder="1198888-9999">
                 <br> 
                 <label> Email: (Opcional) </label>
