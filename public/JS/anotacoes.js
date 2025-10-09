@@ -1,3 +1,16 @@
+// Configuração do Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyC0FPLJlifyJImPS8hNXnifEQPDXAnGuW8",
+    authDomain: "qabazar-ffe21.firebaseapp.com",
+    projectId: "qabazar-ffe21",
+    storageBucket: "qabazar-ffe21.firebasestorage.app",
+    messagingSenderId: "183120823667",
+    appId: "1:183120823667:web:b4563c32a6f1046003f106"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 // Variáveis globais
 let notes = [];
 let tasks = [];
