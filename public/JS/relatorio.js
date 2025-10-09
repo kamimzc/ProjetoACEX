@@ -115,7 +115,8 @@
         // Função para formatar a data
         function formatDate(dateString) {
             if (!dateString) return '-';
-            const date = new Date(dateString);
+            // Adiciona o timezone para evitar conversão incorreta
+            const date = new Date(dateString + 'T00:00:00-03:00');
             return date.toLocaleDateString('pt-BR');
         }
         
