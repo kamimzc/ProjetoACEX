@@ -228,14 +228,18 @@ y += 8;
 doc.setFontSize(11);
 doc.setFont(undefined, "normal");
 doc.text("Bazar Beneficente São Jerônimo", 40, y, { align: "center" }); y += 6;
-doc.text("CNPJ: 00.000.000/0001-00", 40, y, { align: "center" }); y += 6;
-doc.text("Rua Exemplo, 123 - Centro - Cidade/UF", 40, y, { align: "center" }); y += 8;
+doc.text("CNPJ: 17.770.702/0004-08", 40, y, { align: "center" }); y += 6;
+doc.text("Rua Rodrigues da Costa, 10  - ", 40, y, { align: "center" }); y += 6;
+doc.text("Vila Rica - Santo André/SP", 40, y, { align: "center" }); y += 8;
 doc.line(5, y, 75, y); y += 8;
 
 // Dados da venda
 doc.setFontSize(10);
 doc.text(`Venda ID: ${saleId}`, 5, y); y += 5;
-doc.text(`Data/Hora: ${sale.data}`, 5, y); y += 5;
+// Formata data no padrão dd/mm/aaaa
+const [ano, mes, dia] = sale.data.split("-");
+const dataFormatada = `${dia}/${mes}/${ano}`;
+doc.text(`Data/Hora: ${dataFormatada}`, 5, y); y += 5;
 doc.text(`Comprador: ${sale.comprador || "Não informado"}`, 5, y); y += 5;
 doc.text(`Telefone: ${sale.telefone || "Não informado"}`, 5, y); y += 5;
 doc.text(`Email: ${sale.email || "Não informado"}`, 5, y); y += 8;
