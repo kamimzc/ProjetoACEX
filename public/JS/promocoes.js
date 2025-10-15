@@ -1,11 +1,11 @@
-// Configuração do Firebase
+// Configuração do Firebase 
 const firebaseConfig = {
-    apiKey: "AIzaSyC0FPLJlifyJImPS8hNXnifEQPDXAnGuW8",
-    authDomain: "qabazar-ffe21.firebaseapp.com",
-    projectId: "qabazar-ffe21",
-    storageBucket: "qabazar-ffe21.firebasestorage.app",
-    messagingSenderId: "183120823667",
-    appId: "1:183120823667:web:b4563c32a6f1046003f106"
+    apiKey: "AIzaSyBg_LBg0LoH7ADKPHN571ARxEjhgUN2TmE",
+    authDomain: "bazar-46805.firebaseapp.com",
+    projectId: "bazar-46805",
+    storageBucket: "bazar-46805.firebasestorage.app",
+    messagingSenderId: "296506105856",
+    appId: "1:296506105856:web:bb261ba6c4a2406d52b8e5"
 };
 
 // Inicialize o Firebase
@@ -13,7 +13,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // Inicialize o EmailJS com seu User ID
-emailjs.init("o8OaWiUUX69SlxnTY");
+emailjs.init("jxlPp_eP3O_5Dv6BF");
 
 // Função para extrair e-mails únicos da coleção "vendas"
 async function extrairEmailsUnicos() {
@@ -70,8 +70,8 @@ async function enviarPromocoes(dataFormatada, discount, categoriasSelecionadas) 
                 console.log(`Enviando e-mail para: ${email}`);
                 
                 const response = await emailjs.send(
-                    "service_b2g2ngc",
-                    "template_bikz46i",
+                    "service_djnecof",   // substitua pelo seu ID do serviço
+                    "template_e7e7dzn",  // substitua pelo ID do template
                     templateParams
                 );
                 
